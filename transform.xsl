@@ -18,12 +18,11 @@
             <body>
                 <h1>Города и компании</h1>
                 <ul>
-                    <!-- Проходим по уникальным городам (первый item каждого города) -->
+                    <!-- Проходим по уникальным городам -->
                     <xsl:for-each select="//item[generate-id() = generate-id(key('group-by-city-org', concat(@city, '|', @org))[1])]">
                         <xsl:sort select="@city"/>
                         <li>
                             <h3><xsl:value-of select="@city"/></h3>
-                            <!-- Все товары в этом городе -->
                             <xsl:variable name="items-in-city" select="//item[@city = current()/@city]"/>
                             <p>Всего товаров: <xsl:value-of select="count($items-in-city)"/></p>
                             <ul>
@@ -32,7 +31,6 @@
                                     <xsl:sort select="@org"/>
                                     <li>
                                         <h4><xsl:value-of select="@org"/></h4>
-                                        <!-- Все товары этой компании в этом городе -->
                                         <xsl:variable name="items-in-company" select="key('group-by-city-org', concat(@city, '|', @org))"/>
                                         <p>Всего товаров: <xsl:value-of select="count($items-in-company)"/></p>
                                         <ul>
